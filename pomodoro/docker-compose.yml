@@ -1,0 +1,28 @@
+version: '3.8'
+
+networks:
+  app-network:
+    driver: bridge
+
+services:
+  # PostgreSQL (порт 5433 → 5432 внутри контейнера)
+  db:
+    image: postgres:16
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: "pomodoro"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "123"
+    ports:
+      - "5433:5432"
+    networks:
+      - app-network
+
+  # Redis (порт 6380 → 6379 внутри контейнера)
+  cache:
+    image: redis:7.2-alpine
+    ports:
+      - "6380:6379"
+    networks:
+      - app-network
+
